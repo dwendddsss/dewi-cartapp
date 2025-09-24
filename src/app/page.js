@@ -1,47 +1,27 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "./Navbar";
 import CartList from "./CartList";
 
 export default function Page() {
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [quantities, setQuantities] = useState([]);
 
   useEffect(() => {
-    fetch("https://fakestoreapi.com/products?limit=5")
+    fetch("https://fakestoreapi.com/products?limit=3")
       .then((res) => res.json())
       .then((data) => {
-        const updated = data.map((item) => ({ ...item, quantity: 1 }));
-        setProducts(updated);
-        setLoading(false);
-      })
-      .catch((err) => {
-        console.error("Error fetching products:", err);
-        setLoading(false);
+        setProducts(data);
+        setQuantities(Array(data.length).fill(1)); 
       });
   }, []);
 
-  const updateQuantity = (id, newQty) => {
-    setProducts((prev) =>
-      prev.map((item) =>
-        item.id === id ? { ...item, quantity: newQty } : item
-      )
-    );
-  };
-
-  if (loading) {
-    return <h2 className="text-center mt-10">Loading...</h2>;
-  }
-
   return (
-    <div className="app">
-      <Navbar totalItems={products.length} />
-
-      <div className="container">
-        <h1>Produk di Keranjangmu</h1>
-        <CartList cartItems={products} updateQuantity={updateQuantity} />
-      </div>
+    <div>
+      <Navbar />
+      <h1 className="text-2xl font-bold text-center mt-4">Keranjang Belanja</h1>
+     <CartList cartItems={products} updateQuantity={() => {}} />
     </div>
   );
 }
