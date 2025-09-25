@@ -1,18 +1,19 @@
-"use client";
-
 import React from "react";
-import CartItem from "./CartItem"; 
+import CartItem from "./CartItem";
 
-export default function CartList({ cartItems = [], updateQuantity }) {
+const CartList = ({ cartItems, onIncrease, onDecrease }) => {
   return (
-    <div className="cart-list">
+    <div>
       {cartItems.map((item) => (
         <CartItem
           key={item.id}
           item={item}
-          updateQuantity={updateQuantity} 
+          onIncrease={onIncrease}
+          onDecrease={onDecrease}
         />
       ))}
     </div>
   );
-}
+};
+
+export default CartList;

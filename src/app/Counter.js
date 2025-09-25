@@ -1,13 +1,24 @@
-import React from "react";
+"use client";
 
-const Counter = ({ quantity, onQuantityChange }) => {
+export default function Counter({ value, onChange }) {
   return (
-    <div>
-      <button onClick={() => onQuantityChange(quantity - 1)}>-</button>
-      <span>{quantity}</span>
-      <button onClick={() => onQuantityChange(quantity + 1)}>+</button>
+    <div className="flex items-center gap-2">
+      <button
+        onClick={() => onChange(value - 1)}
+        disabled={value <= 1}
+        className="px-2 py-1 bg-gray-300 rounded disabled:opacity-50"
+      >
+        -
+      </button>
+
+      <span className="px-3">{value}</span>
+
+      <button
+        onClick={() => onChange(value + 1)}
+        className="px-2 py-1 bg-gray-300 rounded"
+      >
+        +
+      </button>
     </div>
   );
-};
-
-export default Counter;
+}
